@@ -1,0 +1,36 @@
+<configuration>
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p %m%n</Pattern>
+        </layout>
+    </appender>
+
+    # File appender
+    <appender name="fileout" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>log/logbackex.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            # Rotate and compress file every seconds
+            <FileNamePattern>log/logbackex.%d{yyyy-MM-dd_HH_mm_ss}.log.gz
+            </FileNamePattern>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            # 2020-11-02 16:47:07,334 [main] ERROR kl.example.LogingExampleLogbackTest - Error log message
+            # %date 	2006-10-20 14:06:49,812
+            # %thread   Outputs the name of the thread that generated the logging event.
+            # -5level   (-5 number of reserved chars) Outputs the level of the logging event.
+            # %logger{36} will shorten the logger name, usually without significant loss of meaning.
+            # kl.example.LogingExampleLogbackTest or k.e.LogingExampleLogbackTest (short version)
+            # %msg Outputs the application-supplied message associated with the logging event.
+            # %n end-of-line char
+            <Pattern>%date [%thread] %-6level %logger{36} - %msg%n
+            </Pattern>
+        </encoder>
+    </appender>
+
+    <logger name="kl.example" level="TRACE"/>
+
+    <root level="WARN">
+        <appender-ref ref="stdout" />
+        <appender-ref ref="fileout" />
+    </root>
+</configuration>

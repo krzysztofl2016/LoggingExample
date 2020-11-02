@@ -1,0 +1,32 @@
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd" >
+<log4j:configuration debug="true">
+
+    <!--Console appender -->
+    <appender name="stdout" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} %-5p %m%n"/>
+        </layout>
+    </appender>
+
+    <appender name="roll-by-time"
+              class="org.apache.log4j.rolling.RollingFileAppender">
+        <rollingPolicy class="org.apache.log4j.rolling.TimeBasedRollingPolicy">
+            <param name="FileNamePattern"
+                   value="log/log4j-app.%d{yyyy-MM-dd_HH_mm_ss}.log.gz"/>
+        </rollingPolicy>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} %-5p - %m%n"/>
+        </layout>
+    </appender>
+
+
+    <category name="kl.example">
+        <priority value="TRACE"/>
+        <appender-ref ref="roll-by-time"/>
+    </category>
+    <root>
+        <level value="TRACE"/>
+        <appender-ref ref="stdout"/>
+    </root>
+
+</log4j:configuration>
